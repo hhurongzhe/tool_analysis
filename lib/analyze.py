@@ -2,7 +2,12 @@ import numpy as np
 
 
 # simple statistics: mean and standard deviation
-def stat_simple(data: np.array):
+def stat_simple(data: np.array, pos=0):
+    start_index = int(pos * len(data))
+    if start_index >= len(data) or start_index < 0:
+        print("Warning: position pos is out of range. Using pos=0 instead.")
+        start_index = 0
+    data = data[start_index:]
     num = len(data)
     std = np.std(data, ddof=1)
     mean = np.mean(data)
@@ -10,7 +15,13 @@ def stat_simple(data: np.array):
 
 
 # blocking analysis with fixed block size L
-def blocking_fixed(data: np.array, L: int):
+def blocking_fixed(data: np.array, L: int, pos=0):
+    start_index = int(pos * len(data))
+    if start_index >= len(data) or start_index < 0:
+        print("Warning: position pos is out of range. Using pos=0 instead.")
+        start_index = 0
+    data = data[start_index:]
+
     if L >= len(data):
         raise ValueError("block size L must be less than the length of data.")
 

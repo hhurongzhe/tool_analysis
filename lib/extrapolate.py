@@ -1,5 +1,6 @@
 import numpy as np
 import scipy.optimize as opt
+from scipy.stats import gaussian_kde
 
 
 # exponential extrapolation
@@ -41,6 +42,10 @@ def extrapolate_exp_stat(x_list: np.array, y_list: np.array, y_err_list: np.arra
         if y_extrap is not None and abs((y_extrap - y_list[-1]) / y_list[-1]) < threshold:
             y_extrap_list.append(y_extrap)
     y_extrap_list = np.array(y_extrap_list)
-    y_extrap_mean = np.mean(y_extrap_list)
     y_extrap_std = np.std(y_extrap_list, ddof=1)
+    # y_extrap_mean = np.mean(y_extrap_list)
+    kde = gaussian_kde(y_extrap_list)
+    x_range = np.linspace(np.min(y_extrap_list), np.max(y_extrap_list), 500)
+    pdf = kde.evaluate(x_range)
+    y_extrap_mean = x_range[np.argmax(pdf)]
     return y_extrap_list, y_extrap_mean, y_extrap_std
