@@ -28,19 +28,21 @@ def blocking_fixed(data: np.array, L: int, pos=0):
     num_blocks = len(data) // L
     trimmed_data = data[-num_blocks * L :]
 
-    if num_blocks < 5:
-        raise ValueError("block size L too large, resulting in less than 5 blocks.")
+    if num_blocks < 2:
+        raise ValueError("block size L too large, resulting in less than 2 blocks.")
 
     block_means = np.zeros(num_blocks)
-    block_stds = np.zeros(num_blocks)
 
     for i in range(num_blocks):
         block = trimmed_data[i * L : (i + 1) * L]
-        mean, std = stat_simple(block)
+        if L != 1:
+            mean, std = stat_simple(block)
+        else:
+            mean = np.mean(block)
         block_means[i] = mean
-        block_stds[i] = std
 
-    mean = np.mean(block_means)
-    std_mean, std_std = stat_simple(block_stds)
+    mean, std = stat_simple(block_means)
+    std_err = std / np.sqrt(num_blocks)
+    std_err_err = std_err / np.sqrt(2 * (num_blocks - 1))
 
-    return mean, std_mean, std_std
+    return mean, std_err, std_err_err
