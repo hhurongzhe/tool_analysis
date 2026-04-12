@@ -1,7 +1,7 @@
 import subprocess
 
 # * This script is used to commit changes to a git repository.
-message = "add auto_blocking analysis"
+message = "add script to monitor the progress of an APS paper, improve read_trace function."
 
 
 command1 = "git add ."
