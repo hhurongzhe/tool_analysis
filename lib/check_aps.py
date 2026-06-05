@@ -8,9 +8,10 @@ from email.mime.multipart import MIMEMultipart
 # ==========================================
 # 1. Manuscript and Monitoring Configuration
 # ==========================================
-ACC_CODE = "CP10848"  # Your Accession Code
+# ACC_CODE = "LH19466"
+ACC_CODE = "CP10848"
 LAST_NAME = "hu"  # Author's Last Name
-CHECK_INTERVAL = 3600  # Check interval in seconds (3600s = 1 hour)
+CHECK_INTERVAL = 600  # Check interval in seconds (600s = 10 minutes)
 
 # ==========================================
 # 2. Email Configuration (You must modify this section)
